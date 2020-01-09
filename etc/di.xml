@@ -1,0 +1,29 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="magenestcw_queue_listing_data_source" xsi:type="string">
+                    Magenest\CacheWarmer\Model\ResourceModel\Queue\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magenest\CacheWarmer\Model\ResourceModel\Queue\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magenest_cachewarmer_queue</argument>
+            <argument name="resourceModel" xsi:type="string">Magenest\CacheWarmer\Model\ResourceModel\Queue</argument>
+        </arguments>
+    </virtualType>
+    <preference for="Magenest\CacheWarmer\Api\ParallelCurlInterface" type="Magenest\CacheWarmer\Model\ParallelCurl"/>
+    <preference for="Magenest\CacheWarmer\Api\Data\QueueRepositoryInterface"
+                type="Magenest\CacheWarmer\Model\QueueRepository"/>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="enqueue_command" xsi:type="object">Magenest\CacheWarmer\Console\Command\Enqueue</item>
+                <item name="dequeue_command" xsi:type="object">Magenest\CacheWarmer\Console\Command\Dequeue</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

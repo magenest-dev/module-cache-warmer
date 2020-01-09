@@ -1,0 +1,10 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="magenest_cronjob">
+        <job name="magenest_cachewarmer_generate" instance="Magenest\CacheWarmer\Model\CronJob" method="enqueue">
+            <config_path>magenest_cachewarmer/performance_settings/enqueue_schedule</config_path>
+        </job>
+        <job name="magenest_cachewarmer_warm" instance="Magenest\CacheWarmer\Model\CronJob" method="dequeue">
+            <config_path>magenest_cachewarmer/performance_settings/dequeue_schedule</config_path>
+        </job>
+    </group>
+</config>

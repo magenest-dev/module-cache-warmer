@@ -1,0 +1,19 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magenest_cachewarmer>
+            <general>
+                <enabled>1</enabled>
+                <auto_flush>1</auto_flush>
+                <auto_update>0</auto_update>
+                <auto_hit>0</auto_hit>
+            </general>
+            <performance_settings>
+                <max_requests>4</max_requests>
+                <enable_schedule>1</enable_schedule>
+                <enqueue_schedule>1 1 * * *</enqueue_schedule>
+                <dequeue_schedule>*/5 * * * *</dequeue_schedule>
+                <scheduled_batch_size>320</scheduled_batch_size>
+            </performance_settings>
+        </magenest_cachewarmer>
+    </default>
+</config>

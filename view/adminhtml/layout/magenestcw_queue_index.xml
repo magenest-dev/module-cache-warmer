@@ -1,0 +1,14 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="main.top">
+            <block class="Magenest\CacheWarmer\Block\Adminhtml\Button" name="magenest_button"
+                   template="Magenest_CacheWarmer::button.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magenest\CacheWarmer\Block\Adminhtml\Information" name="magenest_cli"
+                   template="Magenest_CacheWarmer::information.phtml"/>
+            <uiComponent name="magenestcw_queue_listing"/>
+        </referenceContainer>
+    </body>
+</page>

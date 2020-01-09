@@ -1,0 +1,20 @@
+<?php /** @var \Magenest\CacheWarmer\Block\Adminhtml\Information $block
+ */
+?>
+<div class="messages" style="margin-bottom: 20px">
+    <div id="queue-success" class="message message-success success" style="display: none">
+        <span id="generated-urls"></span>
+    </div>
+    <div id="module-disabled" class="message message-error error" style="display: none">
+        <span><?= __('Magenest Cache Warmer is currently disabled!') ?></span>
+    </div>
+    <div id="error-message" class="message message-error error" style="display: none">
+        <span id="error-detail"></span>')
+    </div>
+</div>
+<div class="message" style="margin-bottom: 10px">
+    <span>
+        <?= /* @escapeNotVerified */
+        $block->getText(); ?>
+    </span>
+</div>

@@ -1,0 +1,122 @@
+<?php /** @var \Magenest\CacheWarmer\Block\Adminhtml\Button $block
+ */
+$isModuleEnabled = $block->getIsModuleEnabled();
+?>
+<style>
+    .sticky-header {
+        top: 0px;
+    }
+</style>
+<div class="page-main-actions">
+    <div class="page-actions">
+        <div class="page-actions-buttons">
+            <div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+                <div class="page-actions-inner" data-title="Import">
+                    <div class="page-actions-buttons">
+                        <button id="generate-button"
+                                title="Generate Button"
+                                type="button"
+                                class="action-default scalable save primary">
+                            <span><?= __('Generate Queue') ?></span>
+                        </button>
+                        <button id="warm-button"
+                                title="Warm Button"
+                                type="button"
+                                class="action-default scalable save primary">
+                            <span><?= __('Warm Up Now') ?></span>
+                        </button>
+                        <button id="stop-button"
+                                title="Stop Warming Button"
+                                type="button"
+                                class="action-default scalable save primary"
+                                style="display: none">
+                            <span><?= __('Stop Warming') ?></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'Magento_Ui/js/modal/confirm',
+        'mage/translate'
+    ], function ($, confirmation) {
+        var isModuleEnabled =  <?= $isModuleEnabled?>;
+        $('#generate-button').click(function () {
+            $(".messages").children().hide();
+            var param = {action: "<?=$block::ENQUEUE_ACTION?>"};
+            $.ajax({
+                showLoader: true,
+                url: "<?= $block->getQueueProcessUrl(); ?>",
+                data: param,
+                type: "get",
+                timeout: 1200,
+                error: function () {
+                    if(isModuleEnabled === 1) {
+                        $('#generated-urls').html($.mage.__('Queue is now being generated.'));
+                        $('#queue-success').show();
+                    } else {
+                        $('#module-disabled').show();
+                    }
+                }
+            })
+        });
+        $('#warm-button').click(function () {
+            confirmation({
+                title: 'Warm up now',
+                content: 'This process may take a long time, are you sure you want to do it?',
+                actions: {
+                    confirm: function () {
+                        $(".messages").children().hide();
+                        var param = {action: "<?=$block::DEQUEUE_ACTION?>"};
+                        $.ajax({
+                            showLoader: true,
+                            url: "<?= $block->getQueueProcessUrl(); ?>",
+                            data: param,
+                            type: "get",
+                            timeout: 1200,
+                            error: function () {
+                                if(isModuleEnabled === 1) {
+                                    $('#generated-urls').html($.mage.__('Cache warming up is now in process.'));
+                                    $('#queue-success').show();
+                                    $('#warm-button').hide();
+                                    $('#stop-button').show();
+                                } else {
+                                    $('#module-disabled').show();
+                                }
+                            }
+                        })
+                    },
+                    cancel: function () {
+                        return false;
+                    }
+                }
+            });
+        });
+        $('#stop-button').click(function () {
+            $(".messages").children().hide();
+            var param = {action: "<?=$block::STOP_ACTION?>"};
+            $.ajax({
+                showLoader: true,
+                url: "<?= $block->getQueueProcessUrl(); ?>",
+                data: param,
+                type: "get",
+                timeout: 1200,
+                error: function () {
+                    if(isModuleEnabled === 1) {
+                        $('#generated-urls').html($.mage.__('Warming process has been stopped.'));
+                        $('#queue-success').show();
+                        $('#stop-button').hide();
+                        $('#warm-button').show();
+                    } else {
+                        $('#module-disabled').show();
+                    }
+                }
+            })
+        });
+    })
+</script>

@@ -1,0 +1,117 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magenest" translate="label" sortOrder="69">
+            <label>Magenest</label>
+        </tab>
+        <section id="magenest_cachewarmer" translate="label" type="text" sortOrder="69" showInDefault="1"
+                 showInWebsite="1" showInStore="1">
+            <resource>Magenest_CacheWarmer::config</resource>
+            <class>separator-top</class>
+            <label>Cache Warmer</label>
+            <tab>magenest</tab>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Enable the Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="auto_flush" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Auto-generate Queue upon Cache Flush</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Automatically generate queue upon cache flush. This may take a bit of an extra time flushing cache.
+                    </comment>
+                </field>
+                <field id="auto_update" translate="label comment" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Auto-add Pages into Queue upon Page Changes</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Add product pages urls to the queue upon Product, Category, Cms Page editing</comment>
+                </field>
+                <field id="auto_hit" translate="label comment" type="select" sortOrder="40" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Instantly Hit Cache upon Page Changes</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Warm up related pages instantly upon Product, Category, Cms Page editing. This may take
+                        more time saving a product.
+                    </comment>
+                </field>
+                <field id="custom_urls" translate="label" type="textarea" sortOrder="50" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Additional Custom Urls to join the Queue</label>
+                    <comment>Urls are separated by a line break ↵</comment>
+                </field>
+            </group>
+            <group id="performance_settings" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Performance Settings</label>
+                <field id="max_requests" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Max requests in One Process</label>
+                    <comment>Max requests to send in each warming process. Default value is: 4
+                    </comment>
+                    <validate>required-entry validate-number validate-zero-or-greater validate-digits</validate>
+                </field>
+                <field id="enable_schedule" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Auto-execute Queue on Schedule</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enqueue_schedule" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Queue Generation Schedule</label>
+                    <comment><![CDATA[Enter cron expression<br/>
+                        <br/>
+                        * * * * *<br/>
+                        | | | | |<br/>
+                        | | | | +---- Day of the Week   (0 - 6; Sunday to Saturday.)<br/>
+                        | | | +------ Month             (1 - 12)<br/>
+                        | | +-------- Day of the Month  (1 - 31)<br/>
+                        | +---------- Hour              (0 - 23)<br/>
+                        +------------ Minute            (0 - 59)<br/>
+                        Example: 1 1 * * * - At 01:01am every day<br/>
+                        <br/>
+                        Try out cron expressions - <a href="https://crontab.guru" target="_blank">here</a>
+                        ]]>
+                    </comment>
+                    <depends>
+                        <field id="enable_schedule">1</field>
+                    </depends>
+                </field>
+                <field id="dequeue_schedule" translate="label comment" type="text" sortOrder="50" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Warming Schedule</label>
+                    <comment><![CDATA[Enter cron expression<br/>
+                        <br/>
+                        * * * * *<br/>
+                        | | | | |<br/>
+                        | | | | +---- Day of the Week   (0 - 6; Sunday to Saturday.)<br/>
+                        | | | +------ Month             (1 - 12)<br/>
+                        | | +-------- Day of the Month  (1 - 31)<br/>
+                        | +---------- Hour              (0 - 23)<br/>
+                        +------------ Minute            (0 - 59)<br/>
+                        Example: */5 * * * * - every five minutes<br/>
+                        <br/>
+                        Try out cron expressions - <a href="https://crontab.guru" target="_blank">here</a>
+                        ]]>
+                    </comment>
+                    <depends>
+                        <field id="enable_schedule">1</field>
+                    </depends>
+                </field>
+                <field id="scheduled_batch_size" translate="label comment" type="text" sortOrder="60" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Scheduled Single Batch Size</label>
+                    <comment>The number of page URLs to be processed at a single scheduled execution. Default value is: 320
+                    </comment>
+                    <validate>required-entry validate-number validate-zero-or-greater validate-digits</validate>
+                    <depends>
+                        <field id="enable_schedule">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

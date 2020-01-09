@@ -1,0 +1,18 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magenest_CacheWarmer::cachewarmer" title="Cache Warmer" module="Magenest_CacheWarmer"
+             sortOrder="10" resource="Magenest_CacheWarmer::cachewarmer"/>
+
+        <add id="Magenest_CacheWarmer::queue" title="Url Queue" translate="title" module="Magenest_CacheWarmer"
+             sortOrder="10" parent="Magenest_CacheWarmer::cachewarmer" resource="Magenest_CacheWarmer::queue"/>
+        <add id="Magenest_CacheWarmer::url_queue" title="Url Queue" translate="title" module="Magenest_CacheWarmer"
+             sortOrder="10" parent="Magenest_CacheWarmer::queue" action="magenestcw/queue/"
+             resource="Magenest_CacheWarmer::url_queue"/>
+
+        <add id="Magenest_CacheWarmer::config" title="Configuration" translate="title" module="Magenest_CacheWarmer"
+             sortOrder="10" parent="Magenest_CacheWarmer::cachewarmer" resource="Magenest_CacheWarmer::config"/>
+        <add id="Magenest_CacheWarmer::settings" title="Settings" translate="title" module="Magenest_CacheWarmer"
+             sortOrder="10" parent="Magenest_CacheWarmer::config"
+             action="admin/system_config/edit/section/magenest_cachewarmer" resource="Magenest_CacheWarmer::settings"/>
+    </menu>
+</config>

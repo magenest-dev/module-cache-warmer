@@ -1,0 +1,11 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_save_commit_after">
+        <observer name="magenest_cachewarmer_product_save" instance="Magenest\CacheWarmer\Observer\ProductSave"/>
+    </event>
+    <event name="catalog_category_save_commit_after">
+        <observer name="magenest_cachewarmer_catalog_save" instance="Magenest\CacheWarmer\Observer\CatalogSave"/>
+    </event>
+    <event name="cms_page_save_commit_after">
+        <observer name="magenest_cachewarmer_cms_page_save" instance="Magenest\CacheWarmer\Observer\CmsPageSave"/>
+    </event>
+</config>
