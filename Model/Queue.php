@@ -208,9 +208,20 @@ class Queue extends \Magento\Framework\Model\AbstractModel
                 $result = $connection->query($sql);
                 $generatedUrls += $result->rowCount();
             }
-            $sql = "INSERT INTO " .$queueTable. " (url) SELECT CONCAT ('" .$baseUrl. "', request_path) FROM " .$urlRewriteTable. " WHERE `redirect_type` = 0 GROUP BY `request_path`";
-            $result = $connection->query($sql);
-            $generatedUrls += $result->rowCount();
+
+            if($this->config->isAddStoreCodeToUrlsEnabled()) {
+                $stores = $this->_storeManager->getStores(false, true);
+                foreach($stores as $storeCode => $store) {
+                    $storeBaseUrl = $baseUrl . $storeCode . '/';
+                    $sql = "INSERT INTO " .$queueTable. " (url) SELECT CONCAT ('" .$storeBaseUrl. "', request_path) FROM " .$urlRewriteTable. " WHERE `redirect_type` = 0 GROUP BY `request_path`";
+                    $result = $connection->query($sql);
+                    $generatedUrls += $result->rowCount();
+                }
+            } else {
+                $sql = "INSERT INTO " .$queueTable. " (url) SELECT CONCAT ('" .$baseUrl. "', request_path) FROM " .$urlRewriteTable. " WHERE `redirect_type` = 0 GROUP BY `request_path`";
+                $result = $connection->query($sql);
+                $generatedUrls += $result->rowCount();
+            }
         } catch (\Exception $e) {
             $this->unlock();
             return [false, $e->getMessage()];
