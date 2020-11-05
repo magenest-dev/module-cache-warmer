@@ -64,4 +64,9 @@ class Config extends AbstractHelper
     {
         return $this->scopeConfig->getValue(self::PERFORMANCE . 'scheduled_batch_size');
     }
+
+    public function isAddStoreCodeToUrlsEnabled()
+    {
+        return $this->scopeConfig->getValue('web/url/use_store');
+    }
 }
